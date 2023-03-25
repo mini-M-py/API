@@ -36,7 +36,7 @@ The APi provides the following endpoints:
 * `DELETE /posts/{id}`: delete post by ID
 * `POST /login`: login user with email
 * `POST /vote`: vote the post
-* `GEt /`: root
+* `GET /`: root
 
 ## License
  This project is licensed under the MIT License - see the [LICENSE.md](/LICENSE.md) file for details.
