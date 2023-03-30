@@ -36,6 +36,10 @@ The APi provides the following endpoints:
 * `DELETE /posts/{id}`: delete post by ID
 * `POST /login`: login user with email
 * `POST /vote`: vote the post
+* `POST /comments`: create comments for post
+* `DELETE /comments{id}`: delete comment by post ID
+* `PUT /comments`: update comment
+* `GET /comments{id}`: get all comments by post ID
 * `GET /`: root
 
 ## License

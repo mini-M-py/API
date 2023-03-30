@@ -31,6 +31,9 @@ class VoteOut(BaseModel):
     votes: int
     class Config:
         orm_mode = True
+
+
+
 class CreatePost(PostBase):
     id: int
     owner_id: int
@@ -64,3 +67,18 @@ class Token_data(BaseModel):
 class Vote(BaseModel):
     post_id: int
     dir: conint(le=1)
+
+class Comment(BaseModel):
+    post_id: int
+    comment: str
+
+class CommentOut(BaseModel):
+    user_id: int
+    comments: str
+
+    class Config:
+        orm_mode = True
+
+class Comment_Update(BaseModel):
+    post_id: int
+    comments : str
