@@ -1,6 +1,7 @@
 from fastapi import status, HTTPException, Depends, APIRouter, Response
 from .. import schemas, data_base, model, oauth2
 from sqlalchemy.orm import Session
+from typing import List
 router = APIRouter(
     prefix="/comments",
     tags = ['comments']
@@ -25,7 +26,7 @@ def comment( comment: schemas.Comment, db: Session = Depends(data_base.get_db), 
         db.commit()
     return {'message':'successfully added comment'}
 
-@router.get("/{id}", response_model=list[schemas.CommentOut])
+@router.get("/{id}", response_model=List[schemas.CommentOut])
 def get_comment(id: int, db: Session = Depends(data_base.get_db), current_user: int = Depends(oauth2.get_current_user)):
     post_query = db.query(model.Post).filter(model.Post.id == id).first()
     if post_query == None:
