@@ -1,5 +1,5 @@
-from fastapi import status, HTTPException, Depends, APIRouter
-from .. import model, schemas, utils
+from fastapi import status, HTTPException, Depends, APIRouter, Response
+from .. import model, schemas, utils, oauth2
 from sqlalchemy.orm import Session
 from ..data_base import get_db
 
@@ -27,10 +27,11 @@ def create_user(user :  schemas.create_user, db: Session = Depends(get_db)):
         db.refresh(new_user)
         return new_user
 
-@router.get("/{id}",response_model=schemas.UserOut)
+@router.get("/{id}",response_model=schemas.OutUser)
 def get_user(id: int, db: Session = Depends(get_db)):
     request_user =db.query(model.User).filter(model.User.id == id).first()
     if not request_user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id:{id} not found")
 
     return request_user
+
