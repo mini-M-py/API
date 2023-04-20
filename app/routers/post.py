@@ -1,9 +1,10 @@
 from fastapi import Response, status, HTTPException, Depends, APIRouter
 from .. import model, schemas, oauth2
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, case, and_, or_
 from ..data_base import get_db
 from typing import List, Optional
+from sqlalchemy.sql.expression import exists
 
 router = APIRouter(
     prefix="/posts",
@@ -12,9 +13,13 @@ router = APIRouter(
 #@router.get("/", response_model= List[schemas.Post])
 
 @router.get("/", response_model= List[schemas.VoteOut])
-def get_post(db: Session = Depends(get_db), search: Optional[str] = ""):
-    #posts = db.query(model.Post).filter(model.Post.published == True).filter(model.Post.title.contains(search)).all()
-    posts =  db.query(model.Post, func.count(model.Vote.post_id).label("votes")).join(model.Vote, model.Vote.post_id == model.Post.id, isouter=True).group_by(model.Post.id)\
+def get_post(db: Session = Depends(get_db), search: Optional[str] = "", user_id: int = Depends(oauth2.get_current_user)):
+    current_user = int(user_id.id)
+    subq = db.query(model.Vote).filter(model.Vote.user_id == current_user, model.Vote.post_id == model.Post.id).subquery()
+    posts =  db.query(model.Post, func.count(model.Vote.post_id).label("votes"),
+                      exists().where(and_(subq.c.post_id == model.Post.id,
+                                          subq.c.user_id == current_user)).label("voted"))\
+        .join(model.Vote, model.Vote.post_id == model.Post.id, isouter=True).group_by(model.Post.id)\
         .filter(model.Post.title.contains(search)).all()
 
     return posts
@@ -30,13 +35,19 @@ def create_post(post : schemas.PostCreate, db: Session = Depends(get_db), user_i
     return new_post
 
 @router.get("/{id}", response_model= schemas.VoteOut)
-def get_post(id: int, db: Session = Depends(get_db)):
-    request_post = db.query(model.Post, func.count(model.Vote.post_id).label("votes")).join(model.Vote, model.Vote.post_id == model.Post.id, isouter=True).group_by(model.Post.id)\
+def get_post(id: int, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+    current_user = int(user_id.id)
+    subq = db.query(model.Vote).filter(model.Vote.user_id == current_user,
+                                       model.Vote.post_id == model.Post.id).subquery()
+    posts = db.query(model.Post, func.count(model.Vote.post_id).label("votes"),
+                     exists().where(and_(subq.c.post_id == model.Post.id,
+                                         subq.c.user_id == current_user)).label("voted")) \
+        .join(model.Vote, model.Vote.post_id == model.Post.id, isouter=True).group_by(model.Post.id) \
         .filter(model.Post.id == id).first()
-    if not request_post:
+    if not posts:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id:{id} not found")
 
-    return request_post
+    return posts
 
 @router.delete("/{id}", status_code= status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db),user_id: int = Depends(oauth2.get_current_user)):

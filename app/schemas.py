@@ -3,6 +3,7 @@ from datetime import datetime
 from  typing import Optional
 from pydantic.types import conint
 class PostBase (BaseModel):
+    id: int
     title: str
     content: str
     published: bool = True
@@ -28,6 +29,7 @@ class Post(PostBase):
         orm_mode = True
 class VoteOut(BaseModel):
     Post: Post
+    voted: bool
     votes: int
     class Config:
         orm_mode = True
