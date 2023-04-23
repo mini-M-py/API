@@ -47,6 +47,7 @@ class create_user(BaseModel):
     user_name:str
     email: EmailStr
     password : str
+    otp:str
 
 class UserOut(BaseModel):
     id: int
@@ -93,3 +94,6 @@ class CommentOut(BaseModel):
 class Comment_Update(BaseModel):
     post_id: int
     comments : str
+
+class verify(BaseModel):
+    email:EmailStr

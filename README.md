@@ -1,6 +1,7 @@
 # Social media API
 This is a RESTful API built using FastAPI for a social media application. 
-Currently, it provides endpoint for posts, users and votes furthur will be added gradually.
+Currently, it provides endpoint for posts, users, votes, verification of email
+ address using otp furthur will be added gradually.
 
 ## Installation
 * Clone this repository
@@ -21,13 +22,16 @@ Currently, it provides endpoint for posts, users and votes furthur will be added
       * secret_key
       * algorithm
       * access_token_expire_minutes
+      * email
+      * password `Don't use your email's password insted use App password provided by your email service provider`
 
 * Start the server `uvicorn main:app --reload`
 * Navigate to `http://localhost:8000/docs` in your web browser to access the Swagger UI. From here, you can test the API endpoint using the built-in interface.
 
 ## Endpoints
-The APi provides the following endpoints:
+The API provides the following endpoints:
 * `POST /users/` : create a new user
+* `POST /user/verified`: send otp to verify your email
 * `GET /user/{id}`: get user information by ID
 * `GET /posts/`: get all the posts
 * `GET /posts/{id}`: get post's information by ID
