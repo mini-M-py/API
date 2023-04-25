@@ -23,6 +23,8 @@ def send_email(email, otp):
     message['To'] = to_email
     message['Subject'] = subject
     message.attach(MIMEText(body, 'html'))
+    message.add_header('formate', 'flowed')
+    message.add_header('Content-Disposition', 'inline')
     try:
         # Setup mail server and send email
         mail_server = smtplib.SMTP('smtp.gmail.com', 587)  # Change this to your mail server

@@ -1,96 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
-    <link rel="stylesheet" href="style.css"/>
-    <style type="text/css">
-      body {
-        background-color: #131720;
-        font-family: Arial, sans-serif;
-        color:white;
-        font-size:16px;
-      }
-      @media (max-width: 768px) {
-        body {
-         font-size: 14px;
-        }
-      }
-      @media (max-width: 576px) {
-        body {
-          font-size: 12px;
-        }
-      }
-      .container {
-        margin: 0 auto;
-        max-width: 600px;
-        padding: 20px;
-        background-color: #151f30;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
-      }
-      .top{
-        width:30%;
-       padding-bottom:50px;
-
-      }
-      h2{
-        background-color:orangered;
-        color: white;
-        text-decoration: none;
-        text-align: left;
-        text-transform: uppercase;
-        float: left;
-        height:20px
-        font-size: auto;
-        width: 100%;
-        overflow: hidden;
-        border-radius:5px;
-      }
-
-      @media (max-width: 576px) {
-        h2 {
-          font-size: 12px;
-        }
-      }
-      @media (max-width: 768px) {
-        h2 {
-         font-size: 14px;
-        }
-      }
-
-      p {
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-      .otp {
-        font-size: 24px;
-        font-weight: bold;
-        color: orangered;
-      }
-      .button {
-        display: inline-block;
-        background-color: orangered;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
+    <style>
+      blockquote {
+        display: none !important;
       }
     </style>
   </head>
-  <body>
-    <div class="container">
-        <div class="top">
-        <h2>mini Media</h2>
-            </div><br>
-      <h1>OTP Verification</h1>
-      <p>Please use the following OTP code to verify your account:</p>
-      <p>Hurry up! It is only valid for 1min.</p>
-      <p class="otp">{{ otp }}</p>
-      <p>If you did not request this code, please ignore this email.</p>
-      <a class="button">Verify Now</a>
+  <body style="background-color: #131720; font-family: Arial, sans-serif; color: white; font-size: 16px;">
+    <div class="container" style="margin: 0 auto; max-width: 600px; padding: 20px; background-color: #151f30; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.3);">
+      <div class="top" style="width:30%; padding-bottom:50px; height: 30px;">
+        <h2 style="background-color: orangered; color: white; text-decoration: none; text-align: left; text-transform: uppercase; float: left; height: 20px; font-size: auto; width: 100%; overflow: hidden; border-radius: 5px; height: 100%; text-size: 12px">mini Media</h2>
+      </div>
+      <br>
+      <h1 style="color:red;">OTP Verification</h1>
+      <p style="font-size: 18px; margin-bottom: 20px;">Please use the following OTP code to verify your account:</p>
+      <p style="font-size: 18px; margin-bottom: 20px;">Hurry up! It is only valid for 1min.</p>
+      <h2 class="otp" style="font-size: 24px; font-weight: bold; color: orangered;">{{ otp }}</h2>
+      <p style="font-size: 18px; margin-bottom: 20px;">If you did not request this code, please ignore this email.</p>
+      <a class="button" style="display: inline-block; background-color: orangered; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Now</a>
     </div>
   </body>
 </html>
