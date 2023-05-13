@@ -10,9 +10,11 @@ class PostBase (BaseModel):
 
 
 
-class PostCreate(PostBase):
+class PostCreate(BaseModel):
+    title: str
+    content: str
+    published: bool = True
 
-    pass
 class user_response(BaseModel):
     id : int
     user_name: str
