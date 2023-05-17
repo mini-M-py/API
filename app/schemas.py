@@ -7,7 +7,7 @@ class PostBase (BaseModel):
     title: str
     content: str
     published: bool = True
-
+    created_at: datetime
 
 
 class PostCreate(BaseModel):
@@ -18,7 +18,6 @@ class PostCreate(BaseModel):
 class user_response(BaseModel):
     id : int
     user_name: str
-    created_at : datetime
 
     class Config:
         orm_mode = True
@@ -62,7 +61,6 @@ class UserOut(BaseModel):
 class OutUser(BaseModel):
     id: int
     user_name: str
-    created_at: datetime
     class Config:
         orm_mode = True
 
